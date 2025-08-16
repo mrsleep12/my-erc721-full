@@ -1,4 +1,4 @@
-name: Build ink! contract
+name: Build Ink! contract
 
 on:
   push:
@@ -7,27 +7,19 @@ on:
     branches: [ "main" ]
 
 jobs:
-  contract:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Install Rust nightly
-      run: |
-        rustup toolchain install nightly-2023-06-01 --component rust-src
-        rustup default nightly-2023-06-01
-        rustup target add wasm32-unknown-unknown --toolchain nightly-2023-06-01
+      - name: Install Rust
+        run: |
+          rustup install nightly
+          rustup default nightly
+          rustup target add wasm32-unknown-unknown --toolchain nightly
 
-    - name: Install cargo-contract
-      run: cargo install cargo-contract --force --locked
+      - name: Install cargo-contract
+        run: cargo install cargo-contract --version 4.0.0 --locked
 
-    - name: Build contract
-      run: cargo +nightly-2023-06-01 contract build --release
-
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: erc721-contract
-        path: target/ink/*
+      - name: Build contract
+        run: cargo contract build --release
