@@ -1,0 +1,37 @@
+name: Build Ink! Contract
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Rust nightly
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          target: wasm32-unknown-unknown
+          override: true
+
+      - name: Install cargo-contract
+        run: |
+          cargo install cargo-dylint dylint-link
+          cargo install --force --locked cargo-contract --version 4.0.0
+
+      - name: Build contract
+        run: cargo contract build --release
+
+      - name: Upload contract artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: contract-artifacts
+          path: target/ink/
+          
