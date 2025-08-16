@@ -1,0 +1,20 @@
+{
+  "name": "Ink Smart Contract Dev",
+  "image": "paritytech/contracts-ci-linux:production",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "rust-analyzer.checkOnSave.command": "clippy"
+  },
+  "extensions": [
+    "rust-lang.rust-analyzer",
+    "matklad.rust-analyzer",
+    "tamasfe.even-better-toml",
+    "serayuzgur.crates",
+    "ms-azuretools.vscode-docker"
+  ],
+  "forwardPorts": [
+    9944
+  ],
+  "postCreateCommand": "cargo build --release",
+  "remoteUser": "root"
+}
