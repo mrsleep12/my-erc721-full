@@ -1,6 +1,14 @@
+# My ERC721 NFT Contract (ink!)
 
-# Haikus for Codespaces
+This is a full ERC721 NFT implementation using ink! 4.0.
+It supports:
+- Minting
+- Transfer
+- Approvals
+- Burn
+- Metadata (name, symbol, tokenURI)
 
-This is a quick node project template for demoing Codespaces. It is based on the [Azure node sample](https://github.com/Azure-Samples/nodejs-docs-hello-world). It's great!!!
-
-Point your browser to [Quickstart for GitHub Codespaces](https://docs.github.com/en/codespaces/getting-started/quickstart) for a tour of using Codespaces with this repo.
+To compile:
+```bash
+cargo contract build
+```

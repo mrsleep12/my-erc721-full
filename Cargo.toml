@@ -1,0 +1,12 @@
+[package]
+name = "my_erc721_full"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ink = { version = "4.0.0-rc", default-features = false }
+
+[lib]
+name = "my_erc721_full"
+path = "lib.rs"
+crate-type = ["cdylib", "rlib"]
