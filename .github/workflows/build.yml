@@ -11,27 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Install Rust nightly
+      - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly
+          toolchain: nightly-2023-04-01
           target: wasm32-unknown-unknown
           override: true
+          components: rust-src
 
       - name: Install cargo-contract
         run: |
-          cargo install cargo-dylint dylint-link
-          cargo install --force --locked cargo-contract --version 4.0.0
+          cargo install cargo-contract --force --locked
 
       - name: Build contract
-        run: cargo contract build --release
+        run: |
+          cargo contract build --release
 
-      - name: Upload contract artifacts
+      - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: contract-artifacts
-          path: target/ink/
+          path: target/ink
           
