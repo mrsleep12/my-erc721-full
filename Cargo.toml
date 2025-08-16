@@ -1,14 +1,12 @@
 [package]
 name = "my_erc721"
 version = "0.1.0"
-authors = ["Your Name <you@example.com>"]
 edition = "2021"
-license = "MIT"
 
 [dependencies]
-ink = { version = "4", default-features = false }
-scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
-scale-info = { version = "2", default-features = false, features = ["derive"] }
+ink = { version = "4.0.0", default-features = false }
+scale = "3"
+scale-info = { version = "2", features = ["derive"], default-features = false }
 
 [lib]
 name = "my_erc721"
@@ -22,5 +20,3 @@ std = [
     "scale/std",
     "scale-info/std",
 ]
-
-ink-as-dependency = []
