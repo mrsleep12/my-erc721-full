@@ -1,0 +1,36 @@
+name: Build Ink! Contract
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: nightly-2023-06-01
+        target: wasm32-unknown-unknown
+        override: true
+        components: rust-src
+
+    - name: Install cargo-contract
+      run: |
+        cargo install --force cargo-contract --version 3.0.0
+
+    - name: Build contract
+      run: cargo contract build --release
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: contract-build
+        path: target/ink/*.contract
