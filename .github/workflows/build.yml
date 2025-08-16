@@ -11,27 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Install Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly-2023-04-01
-          target: wasm32-unknown-unknown
-          override: true
-          components: rust-src
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: nightly
+        override: true
+        components: rust-src
 
-      - name: Install cargo-contract
-        run: |
-          cargo install cargo-contract --force --locked
+    - name: Install cargo-contract
+      run: |
+        cargo install cargo-dylint dylint-link
+        cargo install cargo-contract --force --locked
 
-      - name: Build contract
-        run: |
-          cargo contract build --release
+    - name: Build contract
+      run: cargo contract build --release
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: contract-artifacts
-          path: target/ink
-          
+    - name: Upload contract
+      uses: actions/upload-artifact@v3
+      with:
+        name: my-erc721-contract
+        path: target/ink/*
+        
