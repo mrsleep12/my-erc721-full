@@ -14,20 +14,21 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Install Rust
+    - name: Install Rust nightly
       uses: actions-rs/toolchain@v1
       with:
-        toolchain: nightly
+        toolchain: nightly-2023-06-01
         override: true
         components: rust-src
 
+    - name: Add wasm32 target
+      run: rustup target add wasm32-unknown-unknown --toolchain nightly-2023-06-01
+
     - name: Install cargo-contract
-      run: |
-        cargo install cargo-dylint dylint-link
-        cargo install cargo-contract --force --locked
+      run: cargo install cargo-contract --force --locked
 
     - name: Build contract
-      run: cargo contract build --release
+      run: cargo +nightly-2023-06-01 contract build --release
 
     - name: Upload contract
       uses: actions/upload-artifact@v3
